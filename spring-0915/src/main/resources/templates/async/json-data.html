@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json-data</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<h1>JSON 데이터 서버 전송 데이터</h1>
+
+<h3>회원 정보 입력</h3>
+<table>
+    <tr>
+        <td>닉네임</td>
+        <td><input type="text" name="nickname" id="nickname"></td>
+    </tr>
+    <tr>
+        <td>나이</td>
+        <td><input type="number" name="age" id="age"></td>
+    </tr>
+    <tr>
+        <td>이메일</td>
+        <td><input type="email" name="email" id="email"></td>
+    </tr>
+    <tr>
+        <td>가입일</td>
+        <td><input type="date" name="registDate" id="registDate"></td>
+    </tr>
+</table>
+
+<button onclick="sendJquery()">jQuery로 전송</button>
+
+<script>
+
+    function sendJquery() {
+
+        const nickname = document.querySelector("#nickname").value;
+        const age = document.querySelector("#age").value;
+        const email = document.querySelector("#email").value;
+        const registDate = document.querySelector("#registDate").value;
+
+        const userInfo = { nickname, age, email, registDate };
+        const json = JSON.stringify(userInfo);
+
+        console.log("userInfo", userInfo);
+        console.log("json", json);
+
+        const onError = xhr => console.log(xhr);
+        const onSuccess = data => console.log(data);
+
+        $.ajax({
+            url : '/jquery/json',
+            method : 'POST',
+            data : json,
+            contentType : 'application/json; charset=UTF-8',
+            error : onError,
+            success : onSuccess
+        });
+    }
+
+</script>
+
+</body>
+</html>
